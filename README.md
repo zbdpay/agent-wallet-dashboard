@@ -64,9 +64,11 @@ npm run dev
 
 ## Built-in Features
 
+- Persistent light/dark theme toggle in the header (system-aware, saved locally).
 - Auto-refresh every 15 seconds (plus a manual `Refresh now` button).
 - CSV export from the Payments Ledger for the active filter (`All`, `Received`, or `Sent`).
 - Click any ledger row to open a transaction dialog with scrollable details and copy actions.
+- ZBD branding icon wired as favicon/app icon from `public/zbd.png`.
 
 ## Test Checklist
 
@@ -98,3 +100,12 @@ npm run dev
    - Confirm a shadcn dialog opens with scrollable transaction details.
    - Use `Copy` buttons for fields (`Payment ID`, `Status`, `Amount`, etc.) and confirm `Copied` feedback.
    - Use `Copy JSON` and paste into a text editor to verify full transaction payload.
+
+6. Dark mode checks:
+   - Click `Dark mode` in the header.
+   - Confirm the full dashboard theme switches (background, cards, table, dialog).
+   - Reload page and verify theme choice persists.
+
+7. Branding icon checks:
+   - Confirm browser tab icon uses the ZBD image.
+   - In DevTools, verify icon URL resolves to `/zbd.png`.
