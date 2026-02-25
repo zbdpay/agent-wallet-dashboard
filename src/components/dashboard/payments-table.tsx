@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -44,13 +45,31 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
           <CardTitle className="text-zinc-950">Payments Ledger</CardTitle>
           <CardDescription className="text-zinc-600">Read-only view from local `payments.json`</CardDescription>
         </div>
-        <Tabs value={filter} onValueChange={(value) => setFilter(value as PaymentFilter)}>
-          <TabsList>
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="receive">Received</TabsTrigger>
-            <TabsTrigger value="send">Sent</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex flex-wrap items-center gap-2">
+          <Tabs
+            value={filter}
+            onValueChange={(value) => {
+              setFilter(parsePaymentFilter(value));
+            }}
+          >
+            <TabsList>
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="receive">Received</TabsTrigger>
+              <TabsTrigger value="send">Sent</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              downloadPaymentsCsv(visibleRows, filter);
+            }}
+            disabled={visibleRows.length === 0}
+          >
+            Export CSV
+          </Button>
+        </div>
       </CardHeader>
       <CardContent className="px-0">
         <ScrollArea className="h-[420px]">
@@ -105,6 +124,51 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
       </CardContent>
     </Card>
   );
+}
+
+function parsePaymentFilter(value: string): PaymentFilter {
+  if (value === "send" || value === "receive") {
+    return value;
+  }
+
+  return "all";
+}
+
+function downloadPaymentsCsv(payments: PaymentHistoryRecord[], filter: PaymentFilter): void {
+  const rows: string[][] = [
+    ["id", "type", "amount_sats", "fee_sats", "status", "timestamp", "preimage"],
+    ...payments.map((payment) => [
+      payment.id,
+      payment.type,
+      String(payment.amount_sats),
+      typeof payment.fee_sats === "number" ? String(payment.fee_sats) : "",
+      payment.status,
+      payment.timestamp,
+      payment.preimage ?? "",
+    ]),
+  ];
+
+  const csv = `${rows.map((row) => row.map(escapeCsvCell).join(",")).join("\n")}\n`;
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+
+  const anchor = document.createElement("a");
+  const date = new Date().toISOString().slice(0, 10);
+  anchor.href = url;
+  anchor.download = `agent-wallet-payments-${filter}-${date}.csv`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+
+  URL.revokeObjectURL(url);
+}
+
+function escapeCsvCell(value: string): string {
+  if (/[",\n]/.test(value)) {
+    return `"${value.replaceAll("\"", "\"\"")}"`;
+  }
+
+  return value;
 }
 
 function StatusBadge({ status }: { status: string }) {
