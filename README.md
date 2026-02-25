@@ -32,7 +32,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3113`.
 
 ## Use Sample Data
 
@@ -53,6 +53,7 @@ npm run dev
 
 - Auto-refresh every 15 seconds (plus a manual `Refresh now` button).
 - CSV export from the Payments Ledger for the active filter (`All`, `Received`, or `Sent`).
+- Click any ledger row to open a transaction dialog with scrollable details and copy actions.
 
 ## Test Checklist
 
@@ -64,7 +65,7 @@ ZBD_WALLET_PAYMENTS="$PWD/sample-data/payments.json" \
 npm run dev
 ```
 
-2. Open `http://localhost:3000` and confirm:
+2. Open `http://localhost:3113` and confirm:
    - Header shows `Auto-refresh 15s`.
    - `Last sync` time updates automatically every ~15 seconds.
    - `Refresh now` triggers immediate sync and spin animation.
@@ -78,3 +79,9 @@ npm run dev
 4. Live-balance behavior checks:
    - With invalid/missing `apiKey`, confirm wallet section shows a balance diagnostic.
    - With a valid key in your config, confirm live balance appears and updates on refresh.
+
+5. Transaction dialog checks:
+   - Click any row in Payments Ledger.
+   - Confirm a shadcn dialog opens with scrollable transaction details.
+   - Use `Copy` buttons for fields (`Payment ID`, `Status`, `Amount`, etc.) and confirm `Copied` feedback.
+   - Use `Copy JSON` and paste into a text editor to verify full transaction payload.
