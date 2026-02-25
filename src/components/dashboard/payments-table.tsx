@@ -42,11 +42,11 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
 
   return (
     <>
-      <Card className="border-zinc-300/60 bg-white/90 shadow-sm backdrop-blur">
+      <Card className="border-zinc-300/60 bg-white/90 shadow-sm backdrop-blur dark:border-zinc-700/60 dark:bg-zinc-950/80">
       <CardHeader className="gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <CardTitle className="text-zinc-950">Payments Ledger</CardTitle>
-          <CardDescription className="text-zinc-600">Read-only view from local `payments.json`</CardDescription>
+          <CardTitle className="text-zinc-950 dark:text-zinc-100">Payments Ledger</CardTitle>
+          <CardDescription className="text-zinc-600 dark:text-zinc-300">Read-only view from local `payments.json`</CardDescription>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Tabs
@@ -94,7 +94,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                     key={`${payment.id}-${payment.timestamp}`}
                     role="button"
                     tabIndex={0}
-                    className="cursor-pointer transition-colors hover:bg-zinc-100/70 focus-visible:bg-zinc-100/70"
+                    className="cursor-pointer transition-colors hover:bg-zinc-100/70 focus-visible:bg-zinc-100/70 dark:hover:bg-zinc-900/70 dark:focus-visible:bg-zinc-900/70"
                     onClick={() => {
                       setSelectedPayment(payment);
                     }}
@@ -105,14 +105,14 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                       }
                     }}
                   >
-                    <TableCell className="pl-6 text-xs text-zinc-600">{formatTimestamp(payment.timestamp)}</TableCell>
+                    <TableCell className="pl-6 text-xs text-zinc-600 dark:text-zinc-300">{formatTimestamp(payment.timestamp)}</TableCell>
                     <TableCell>
                       <Badge
                         variant="outline"
                         className={
                           payment.type === "receive"
-                            ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-                            : "border-amber-300 bg-amber-50 text-amber-800"
+                            ? "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/45 dark:text-emerald-200"
+                            : "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-700 dark:bg-amber-950/45 dark:text-amber-200"
                         }
                       >
                         {payment.type}
@@ -122,15 +122,15 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                       <StatusBadge status={payment.status} />
                     </TableCell>
                     <TableCell className="text-right font-medium tabular-nums">{formatSats(payment.amount_sats)}</TableCell>
-                    <TableCell className="text-right text-zinc-600 tabular-nums">
+                    <TableCell className="text-right text-zinc-600 tabular-nums dark:text-zinc-300">
                       {typeof payment.fee_sats === "number" ? formatSats(payment.fee_sats) : "-"}
                     </TableCell>
-                    <TableCell className="pr-6 text-right font-mono text-xs text-zinc-600">{compactId(payment.id)}</TableCell>
+                    <TableCell className="pr-6 text-right font-mono text-xs text-zinc-600 dark:text-zinc-300">{compactId(payment.id)}</TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className="py-12 text-center text-zinc-600">
+                  <TableCell colSpan={6} className="py-12 text-center text-zinc-600 dark:text-zinc-300">
                     No payment rows for this filter.
                   </TableCell>
                 </TableRow>
@@ -202,10 +202,10 @@ function escapeCsvCell(value: string): string {
 function StatusBadge({ status }: { status: string }) {
   const normalized = status.toLowerCase();
   const className = normalized.includes("fail") || normalized.includes("error") || normalized.includes("cancel")
-    ? "border-rose-300 bg-rose-50 text-rose-800"
+    ? "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-700 dark:bg-rose-950/45 dark:text-rose-200"
     : normalized.includes("complete") || normalized.includes("paid") || normalized.includes("settled")
-      ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-      : "border-zinc-300 bg-zinc-100 text-zinc-700";
+      ? "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/45 dark:text-emerald-200"
+      : "border-zinc-300 bg-zinc-100 text-zinc-700 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200";
 
   return (
     <Badge variant="outline" className={className}>

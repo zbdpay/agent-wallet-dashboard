@@ -7,6 +7,7 @@ import { NetFlowChart } from "@/components/dashboard/net-flow-chart";
 import { PaymentsTable } from "@/components/dashboard/payments-table";
 import { SummaryCards } from "@/components/dashboard/summary-cards";
 import { WalletOverview } from "@/components/dashboard/wallet-overview";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -77,14 +78,14 @@ export function DashboardShell({ initialData }: DashboardShellProps) {
   }, [lastUpdatedAt]);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#f6f4ef_0%,_#ece8dd_35%,_#d5d1c5_100%)] px-4 py-8 text-zinc-900 sm:px-6 lg:px-12">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#f6f4ef_0%,_#ece8dd_35%,_#d5d1c5_100%)] px-4 py-8 text-zinc-900 dark:bg-[radial-gradient(circle_at_top,_#12152a_0%,_#0b1022_40%,_#060911_100%)] dark:text-zinc-100 sm:px-6 lg:px-12">
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        <section className="rounded-2xl border border-zinc-300/70 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:p-8">
+        <section className="rounded-2xl border border-zinc-300/70 bg-white/80 p-6 shadow-sm backdrop-blur-sm dark:border-zinc-700/70 dark:bg-zinc-950/75 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">agent-wallet</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">agent-wallet</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Wallet & Payments Dashboard</h1>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-600 sm:text-base">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-base">
                 Local-first visualization for your agent host machine. It reads wallet metadata and payment history directly
                 from your JSON files while optionally fetching live balance through your existing API key.
               </p>
@@ -92,9 +93,10 @@ export function DashboardShell({ initialData }: DashboardShellProps) {
 
             <div className="flex flex-col items-start gap-2 sm:items-end">
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="border-zinc-300 bg-zinc-50 text-zinc-700">
+                <Badge variant="outline" className="border-zinc-300 bg-zinc-50 text-zinc-700 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200">
                   Auto-refresh 15s
                 </Badge>
+                <ThemeToggle />
                 <Button
                   type="button"
                   variant="outline"
@@ -108,8 +110,8 @@ export function DashboardShell({ initialData }: DashboardShellProps) {
                   Refresh now
                 </Button>
               </div>
-              <p className="text-xs text-zinc-600">Last sync: {lastUpdatedLabel}</p>
-              {refreshError ? <p className="text-xs text-rose-700">Refresh error: {refreshError}</p> : null}
+              <p className="text-xs text-zinc-600 dark:text-zinc-300">Last sync: {lastUpdatedLabel}</p>
+              {refreshError ? <p className="text-xs text-rose-700 dark:text-rose-300">Refresh error: {refreshError}</p> : null}
             </div>
           </div>
         </section>
@@ -138,7 +140,7 @@ export function DashboardShell({ initialData }: DashboardShellProps) {
           />
         </section>
 
-        <Separator className="bg-zinc-400/50" />
+        <Separator className="bg-zinc-400/50 dark:bg-zinc-700/60" />
 
         <PaymentsTable payments={data.payments} />
       </main>

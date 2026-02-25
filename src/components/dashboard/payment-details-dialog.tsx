@@ -49,12 +49,12 @@ export function PaymentDetailsDialog({ payment, open, onOpenChange }: PaymentDet
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-2xl dark:border-zinc-700 dark:bg-zinc-950/95">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-zinc-950">
+          <DialogTitle className="flex items-center gap-2 text-zinc-950 dark:text-zinc-100">
             Transaction {payment ? compactId(payment.id) : "details"}
           </DialogTitle>
-          <DialogDescription className="text-zinc-600">
+          <DialogDescription className="text-zinc-600 dark:text-zinc-300">
             Scrollable record details with one-click copy actions.
           </DialogDescription>
         </DialogHeader>
@@ -101,8 +101,8 @@ export function PaymentDetailsDialog({ payment, open, onOpenChange }: PaymentDet
                   variant="outline"
                   className={
                     payment.type === "receive"
-                      ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-                      : "border-amber-300 bg-amber-50 text-amber-800"
+                      ? "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/45 dark:text-emerald-200"
+                      : "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-700 dark:bg-amber-950/45 dark:text-amber-200"
                   }
                 >
                   {payment.type}
@@ -110,11 +110,11 @@ export function PaymentDetailsDialog({ payment, open, onOpenChange }: PaymentDet
                 <StatusBadge status={payment.status} />
               </div>
 
-              <Separator className="my-1 bg-zinc-300/80" />
+              <Separator className="my-1 bg-zinc-300/80 dark:bg-zinc-700/80" />
 
               <div className="grid gap-2">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-zinc-800">Raw JSON</p>
+                  <p className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Raw JSON</p>
                   <Button
                     type="button"
                     variant="outline"
@@ -128,7 +128,7 @@ export function PaymentDetailsDialog({ payment, open, onOpenChange }: PaymentDet
                     {copiedField === "json" ? "Copied" : "Copy JSON"}
                   </Button>
                 </div>
-                <pre className="overflow-x-auto rounded-md border border-zinc-300/70 bg-zinc-50 p-3 font-mono text-xs text-zinc-700">
+                <pre className="overflow-x-auto rounded-md border border-zinc-300/70 bg-zinc-50 p-3 font-mono text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">
                   {prettyJson}
                 </pre>
               </div>
@@ -153,16 +153,16 @@ interface FieldRowProps {
 
 function FieldRow({ label, value, helper, copied, disabled = false, onCopy }: FieldRowProps) {
   return (
-    <div className="rounded-md border border-zinc-300/70 bg-zinc-50 px-3 py-2">
+    <div className="rounded-md border border-zinc-300/70 bg-zinc-50 px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900">
       <div className="mb-1 flex items-center justify-between gap-2">
-        <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{label}</p>
         <Button type="button" variant="ghost" size="sm" onClick={onCopy} disabled={disabled} className="h-7 gap-1 px-2">
           {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
           {copied ? "Copied" : "Copy"}
         </Button>
       </div>
-      <p className="break-all font-mono text-xs text-zinc-800">{value || "-"}</p>
-      {helper ? <p className="mt-1 text-xs text-zinc-600">{helper}</p> : null}
+      <p className="break-all font-mono text-xs text-zinc-800 dark:text-zinc-100">{value || "-"}</p>
+      {helper ? <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-300">{helper}</p> : null}
     </div>
   );
 }
@@ -170,10 +170,10 @@ function FieldRow({ label, value, helper, copied, disabled = false, onCopy }: Fi
 function StatusBadge({ status }: { status: string }) {
   const normalized = status.toLowerCase();
   const className = normalized.includes("fail") || normalized.includes("error") || normalized.includes("cancel")
-    ? "border-rose-300 bg-rose-50 text-rose-800"
+    ? "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-700 dark:bg-rose-950/45 dark:text-rose-200"
     : normalized.includes("complete") || normalized.includes("paid") || normalized.includes("settled")
-      ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-      : "border-zinc-300 bg-zinc-100 text-zinc-700";
+      ? "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/45 dark:text-emerald-200"
+      : "border-zinc-300 bg-zinc-100 text-zinc-700 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-200";
 
   return (
     <Badge variant="outline" className={className}>

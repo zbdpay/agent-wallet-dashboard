@@ -19,10 +19,10 @@ interface NetFlowChartProps {
 
 export function NetFlowChart({ points }: NetFlowChartProps) {
   return (
-    <Card className="border-zinc-300/60 bg-white/90 shadow-sm backdrop-blur">
+    <Card className="border-zinc-300/60 bg-white/90 shadow-sm backdrop-blur dark:border-zinc-700/60 dark:bg-zinc-950/80">
       <CardHeader>
-        <CardTitle className="text-zinc-950">14-Day Net Flow</CardTitle>
-        <CardDescription className="text-zinc-600">Daily inbound minus outbound sats</CardDescription>
+        <CardTitle className="text-zinc-950 dark:text-zinc-100">14-Day Net Flow</CardTitle>
+        <CardDescription className="text-zinc-600 dark:text-zinc-300">Daily inbound minus outbound sats</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[220px] w-full">
