@@ -1,0 +1,33 @@
+[
+  {
+    "id": "pay_01hzyxr9pn6ax6",
+    "type": "receive",
+    "amount_sats": 2500,
+    "status": "completed",
+    "timestamp": "2026-02-22T18:32:12.000Z"
+  },
+  {
+    "id": "pay_01hzyxs0ft7dpd",
+    "type": "send",
+    "amount_sats": 850,
+    "fee_sats": 2,
+    "status": "completed",
+    "timestamp": "2026-02-23T09:15:41.000Z",
+    "preimage": "9fb445b3f6f96c91368c"
+  },
+  {
+    "id": "pay_01hzyxt7km2bz0",
+    "type": "receive",
+    "amount_sats": 1200,
+    "status": "pending",
+    "timestamp": "2026-02-24T14:06:08.000Z"
+  },
+  {
+    "id": "pay_01hzyxv20a39ym",
+    "type": "send",
+    "amount_sats": 540,
+    "fee_sats": 1,
+    "status": "failed",
+    "timestamp": "2026-02-25T03:10:20.000Z"
+  }
+]
