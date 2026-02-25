@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PaymentDetailsDialog } from "@/components/dashboard/payment-details-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -26,6 +27,7 @@ interface PaymentsTableProps {
 
 export function PaymentsTable({ payments }: PaymentsTableProps) {
   const [filter, setFilter] = useState<PaymentFilter>("all");
+  const [selectedPayment, setSelectedPayment] = useState<PaymentHistoryRecord | null>(null);
 
   const visibleRows = useMemo(
     () =>
@@ -39,7 +41,8 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
   );
 
   return (
-    <Card className="border-zinc-300/60 bg-white/90 shadow-sm backdrop-blur">
+    <>
+      <Card className="border-zinc-300/60 bg-white/90 shadow-sm backdrop-blur">
       <CardHeader className="gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <CardTitle className="text-zinc-950">Payments Ledger</CardTitle>
@@ -87,7 +90,21 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
             <TableBody>
               {visibleRows.length > 0 ? (
                 visibleRows.map((payment) => (
-                  <TableRow key={`${payment.id}-${payment.timestamp}`}>
+                  <TableRow
+                    key={`${payment.id}-${payment.timestamp}`}
+                    role="button"
+                    tabIndex={0}
+                    className="cursor-pointer transition-colors hover:bg-zinc-100/70 focus-visible:bg-zinc-100/70"
+                    onClick={() => {
+                      setSelectedPayment(payment);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setSelectedPayment(payment);
+                      }
+                    }}
+                  >
                     <TableCell className="pl-6 text-xs text-zinc-600">{formatTimestamp(payment.timestamp)}</TableCell>
                     <TableCell>
                       <Badge
@@ -122,7 +139,18 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
           </Table>
         </ScrollArea>
       </CardContent>
-    </Card>
+      </Card>
+
+      <PaymentDetailsDialog
+        payment={selectedPayment}
+        open={selectedPayment !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedPayment(null);
+          }
+        }}
+      />
+    </>
   );
 }
 
