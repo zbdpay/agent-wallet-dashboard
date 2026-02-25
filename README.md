@@ -34,6 +34,19 @@ npm run dev
 
 Open `http://localhost:3113`.
 
+### Scripts
+
+- `npm run dev` - Starts Next.js dev server on port `3113`
+- `npm run build` - Production build
+- `npm run start` - Starts production server
+- `npm run lint` - ESLint check
+
+## Environment Variables
+
+- `ZBD_WALLET_CONFIG` - Override config path (default `~/.zbd-wallet/config.json`)
+- `ZBD_WALLET_PAYMENTS` - Override payments path (default `~/.zbd-wallet/payments.json`)
+- `ZBD_API_BASE_URL` - Override ZBD API URL for live balance lookup
+
 ## Use Sample Data
 
 The repo includes local sample files in `sample-data/`.
