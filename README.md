@@ -34,6 +34,18 @@ npm run dev
 
 Open `http://localhost:3113`.
 
+## Fastest Demo (No Wallet Setup)
+
+You can run the dashboard immediately with included sample files:
+
+```bash
+ZBD_WALLET_CONFIG="$PWD/sample-data/config.json" \
+ZBD_WALLET_PAYMENTS="$PWD/sample-data/payments.json" \
+npm run dev
+```
+
+This gives a full UI walkthrough without requiring a real API key or wallet state.
+
 ### Scripts
 
 - `npm run dev` - Starts Next.js dev server on port `3113`
